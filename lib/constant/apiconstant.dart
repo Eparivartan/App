@@ -1,0 +1,1 @@
+const String BaseUrl = "https://mycommercialpal.com/";
