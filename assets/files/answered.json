@@ -1,0 +1,32 @@
+{
+  "Img" : "assets/images/pg12-1.png",
+  "Text" : "Ask Our Experts",
+  "img" : "assets/images/AskOrExp.png",
+  "text" : "Our users, their queries & our expert team answers are captured here in….come benefit from the industry audience …..",
+  "details" : "Like what you see ? \nFurther training needs ? \nreach us below :",
+  "nos" : "+91 9X9X9X1234; 040-24892489",
+  "mail" : "support@gmail.com \n support@gmail.com",
+  "call" : "assets/images/Iconcall.png",
+  "mailimg" : "assets/images/Iconmail.png",
+  "globe" : "assets/images/globe.png",
+  "site" : "www.dhyanacademy.co.in",
+  "question" : [
+    {
+      "main" : "Q1) I like construction? which branch to take part of my academics in Diploma ?",
+      "data" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    },
+    {
+      "main" : "Q2) Question 2",
+      "data" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    },
+    {
+      "main" : "Q3) Share topics on Drafting plans ?",
+      "data" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    },
+    {
+      "main" : "Q 10) What is salary for civil engineer ?",
+      "data" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    }
+  ]
+}
+

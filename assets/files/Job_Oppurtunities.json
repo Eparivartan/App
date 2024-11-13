@@ -1,0 +1,41 @@
+{
+  "main" : "Job Oppurtunities",
+  "sub" : "Job Oppurtunities",
+  "Immage" : "assets/images/JobOppour.png",
+  "logoo" : "assets/images/pg12-1.png",
+  "elvbtn1" : "Freshers",
+  "elvbtn2" : "Experienced",
+  "jobfound" : "Total Jobs Found :",
+  "updt" : "Last post on:",
+
+
+
+  "drphead" : "Branch/Specialization",
+  "drpList" : [
+    {
+      "value": "Architeture"
+    },
+    {
+      "value": "Civil"
+    },
+    {
+      "value": "Mechanical"
+    }
+  ],
+
+  "tile" : [
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: ",
+      "job_id" : "Job ID:",
+      "job_prfl" : "Job profile",
+    }
+  ]
+
+}

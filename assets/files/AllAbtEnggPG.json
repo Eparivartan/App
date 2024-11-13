@@ -1,0 +1,41 @@
+{
+  "details" : [
+    {
+      "image" : "assets/images/EnggBranches.png",
+      "title" : "Engineering Branches\n(Arch. Civil Mech.)"
+    },
+    {
+      "image" : "assets/images/cc-pg36-1.png",
+      "title" : "Engineering Basics"
+    },
+    {
+      "image" : "assets/images/EnggGlosry.png",
+      "title" : "Engineering Glossary"
+    },
+    {
+      "image" : "assets/images/codesandstd.png",
+      "title" : "Codes and Standards"
+    }
+  ],
+
+  "paages" : [
+    {
+      "page" : "/Engineering_Branches"
+    },
+    {
+      "page" : "/Engineering_Basics"
+    },
+    {
+      "page" : "/Engineering_Glossary"
+    },
+    {
+      "page" : "/Codes_and_Standards"
+    }
+  ],
+
+  "main" : "All About Engineering",
+  "sub" : "CAD World captures below most of the aspects for a student/professional to quickly revisit basics and know how about ACM branches of Engineering... ",
+  "Immage" : "assets/images/AllAboutEngg.png",
+  "logoo" : "assets/images/pg12-1.png"
+
+}

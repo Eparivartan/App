@@ -1,0 +1,55 @@
+{
+  "menu": [
+    {
+      "image": "assets/images/virat.png",
+      "text1" : "\nWelcome",
+      "text2" : "Jhon Doe",
+      "images": "assets/images/virat.png"
+
+    }
+  ],
+  "data": [
+    {
+      "list": "About Us"
+    },
+    {
+      "list": "My Profile"
+    },
+    {
+      "list" : "My Activity"
+    },
+    {
+      "list" : "My Subscriptions"
+    },
+    {
+      "list" : "Menu 5"
+    },
+    {
+      "list": "Contact Us"
+    }
+
+  ],
+  "map": [
+    {
+      "link": "/aboutus"
+    },
+    {
+      "link": "/profile"
+    },
+    {
+      "link": "/activity"
+    },
+    {
+      "link": "/subscriptions"
+    },
+    {
+      "link": "/menu5"
+    },
+    {
+      "link": "/contactus"
+    }
+  ]
+
+
+
+}

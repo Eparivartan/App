@@ -1,0 +1,48 @@
+{
+
+  "learn" : [
+    {
+      "Image" : "assets/images/ExternalTraining.png",
+      "title" : "www.google.com"
+    },
+    {
+      "Image" : "assets/images/industrySeminar.png",
+      "title" : "www.fb.com"
+    },
+    {
+      "Image" : "assets/images/guest.png",
+      "title" : "www.stackoverflows.com"
+    },
+    {
+      "Image" : "assets/images/question.png",
+      "title" : "Question Papers"
+    },
+    {
+      "Image" : "assets/images/RefBooks.png",
+      "title" : "Reference Text Books"
+    }
+  ],
+  "Pages" : [
+    {
+      "page" : "/ExternalTrainingVideos"
+    },
+    {
+      "page" : "/IndustrySeminars"
+    },
+    {
+      "page" : "/GuestLectures"
+    },
+    {
+      "page" : "/QuestionPapers"
+    },
+    {
+      "page" : "/ReferenceTextBooks"
+    }
+
+  ],
+
+  "img" : "assets/images/pg12-1.png",
+  "timg" : "assets/images/dhyanacademy-logo.png",
+  "pic" : "assets/images/learnAssistpg.png"
+}
+

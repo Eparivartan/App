@@ -1,0 +1,35 @@
+{
+ "data" : [
+   {
+     "text" : "S/w versions (by latest)",
+     "text1" : "In the fields of ACM there are revolutionary technologies evolving to solve the worldly needs…… \n\nSome of the niche technologies to look out for :"
+   }
+ ],
+  "topics" : [
+    {
+      "image" : "assets/images/default-image.png",
+      "data1" : "Topic Title / 3D Printing",
+      "data2" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "image" : "assets/images/default-image.png",
+      "data1" : "Topic Title / 3D Printing",
+      "data2" : "Lorem1 Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "image" : "assets/images/default-image.png",
+      "data1" : "Topic Title / 3D Printing",
+      "data2" : "Lorem2 Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "image" : "assets/images/default-image.png",
+      "data1" : "Topic Title / 3D Printing",
+      "data2" : "Lorem4 Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "image" : "assets/images/default-image.png",
+      "data1" : "Topic Title / 3D Printing",
+      "data2" : "Lorem6 Ipsum is simply dummy text of the printing and typesetting industry."
+    }
+  ]
+}

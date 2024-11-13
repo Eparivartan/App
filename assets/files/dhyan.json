@@ -1,0 +1,55 @@
+{
+  "dhyan" : [
+    {
+      "Image" : "assets/images/Coursesoffered.png",
+      "title" : "Courses Offered"
+    },
+    {
+      "Image" : "assets/images/Demovid.png",
+      "title" : "Demo Videos"
+    },
+    {
+      "Image" : "assets/images/gallery.png",
+      "title" : "Gallery"
+    },
+    {
+      "Image" : "assets/images/Review1.png",
+      "title" : "Reviews"
+    },
+    {
+      "Image" : "assets/images/Contact1.png",
+      "title" : "Contact Dhyan"
+    }
+  ],
+  "Pages" : [
+    {
+      "page" : "/Courses Offered"
+    },
+    {
+      "page" : "/Demo Videos"
+    },
+    {
+      "page" : "/Gallery"
+    },
+    {
+      "page" : "/Reviews"
+    },
+    {
+      "page" : "/Contact Dhyan"
+    }
+  ],
+
+  "Dhyan" : "We are the one stop solution for all your learning needs,trainings,certifications and your placement needs in the fields of ACM....",
+  "img" : "assets/images/pg12-1.png",
+  "timg" : "assets/images/dhyanacademy-logo.png",
+  "pic" : "assets/images/homepage.png",
+  "contact" : "For your training needs, corporate & academic traning requirements - feel free to reach us on any of the channels below.",
+  "nos" : " +91 9X9X9X1234; 040-24892489",
+  "mail" : " support@gmail.com \n support@gmail.com",
+  "call" : "assets/images/Iconcall.png",
+  "mailing" : "assets/images/Iconmail.png",
+  "globe" : "assets/images/globe.png",
+  "site" : " www.dhyanacademy.co.in",
+  "loc": "assets/images/Iconlocation.png",
+  "add": " Dhyan Academy \n Plot 119, S R Nagar, \n Opp. HDFC bank, Hyderabad -500 026"
+}

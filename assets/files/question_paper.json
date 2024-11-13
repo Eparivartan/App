@@ -1,0 +1,34 @@
+{
+  "img" : "assets/images/pg12-1.png",
+  "pic": "assets/images/QuestionPaper.png",
+  "details" : [
+    {
+      "head" : "Question Papers 1",
+      "sub" : "Interview Questions of Infosys - Jr. Drafter Job"
+    },
+    {
+      "head" : "Question Papers 2",
+      "sub" : "Interview Questions of Infosys - Jr. Drafter Job"
+    },
+    {
+      "head" : "Question Papers 3",
+      "sub" : "Interview Questions of Infosys - Jr. Drafter Job"
+    },
+    {
+      "head" : "Question Papers 4",
+      "sub" : "Interview Questions of Infosys - Jr. Drafter Job"
+    },
+    {
+      "head" : "Question Papers 5",
+      "sub" : "Interview Questions of Infosys - Jr. Drafter Job"
+    },
+    {
+      "head" : "Question Papers 6",
+      "sub" : "Interview Questions of Infosys - Jr. Drafter Job"
+    },
+    {
+      "head" : "Question Papers 7",
+      "sub" : "Interview Questions of Infosys - Jr. Drafter Job"
+    }
+  ]
+}

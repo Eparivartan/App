@@ -1,0 +1,29 @@
+{
+  "Data" : [
+    {
+      "image" : "assets/images/interviewtypefrmts.png",
+      "title":"Interview Types/Formats"
+    },
+    {
+      "image" : "assets/images/technicalQ.png",
+      "title" : "Technical Questions"
+    },
+    {
+      "image" :"assets/images/MockTest.png",
+      "title" : "Mock Tests (MCQs) / \nTest your skills"
+    }
+  ],
+
+  "pages": [
+    {
+      "page": "/interviewtype"
+    },
+    {
+      "page" : "/TechQues"
+    },
+    {
+      "page" : "/MockTest"
+    }
+  ]
+
+}

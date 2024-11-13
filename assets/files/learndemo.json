@@ -1,0 +1,32 @@
+{
+  "Demo" : [
+    {
+      "Image" : "assets/images/class_1.png",
+      "title" : "AutoCAD v11 :",
+      "AC" :  "Demo Class 1",
+      "date"  : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demov_2.png",
+      "title" : "AutoCAD v11 :",
+      "AC" :  "Demo Video 2",
+      "date"  : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demov_3.png",
+      "title" : "AutoCAD v11 :",
+      "AC" :  "Demo Video 3",
+      "date"  : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demov_3.png",
+      "title" : "AutoCAD v11 :",
+      "AC" :  "Demo Video 25",
+      "date"  : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    }
+  ]
+}

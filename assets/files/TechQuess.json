@@ -1,0 +1,43 @@
+{
+  "info" :"CAD World presents you various questions being asked in Technical round of interview…",
+  "drop" : "Branch",
+  "Tech" : [
+    {
+      "Ques":"What is an Acute Triangle",
+      "Ans" : "A triangle that contains only angles that are less than 90 degrees:"
+    },
+    {
+      "Ques":"What is definition of Balance",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees"
+    },
+    {
+      "Ques":"What is an Acute Triangle",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees:"
+    },
+    {
+      "Ques":"What is definition of Balance",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees"
+    },
+    {
+      "Ques":"What is an Acute Triangle",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees:"
+    },
+    {
+      "Ques":"What is definition of Balance",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees"
+    },
+    {
+      "Ques":"What is definition of Balance",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees"
+    },
+    {
+      "Ques":"What is an Acute Triangle",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees:"
+    },
+    {
+      "Ques":"Explain longitivity of angle",
+      "Ans":"A triangle that contains only angles that are less than 90 degrees"
+    }
+  ]
+
+}

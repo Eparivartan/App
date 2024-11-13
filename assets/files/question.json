@@ -1,0 +1,65 @@
+{
+  "data" : [
+    {
+      "que": "1) How many sides does Square have?",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+    },
+    {
+      "que": "2) What is 3x4",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+
+    },
+    {
+      "que": "3) How many sides does Square have?",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+
+    },
+    {
+      "que": "4) What is 3x4",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+
+    },
+    {
+      "que": "5) How many sides does Square have?",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+
+    },
+    {
+      "que":"6) What is 3x4",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+
+    },
+    {
+      "que":"7) How many sides does Square have?",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+    },
+    {
+      "que": "8) What is 3x4",
+      "op1": "2",
+      "op2": "6",
+      "op3": "5",
+      "op4": "4"
+    }
+  ]
+}

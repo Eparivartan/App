@@ -1,0 +1,37 @@
+{
+  "img" : "assets/images/pg12-1.png",
+  "text1" : "For Professionals\n(Career Enhancing guide)",
+  "text" : "Professionals : Upgrading skills",
+  "pic" : "assets/images/fresher2ind.png",
+  "data" : "Professionals need to be in par with industry. and keep up to the technology trends. Helping to afloat int he competitive industry",
+  "details" : [
+    {
+      "head" : "Update/Train : Topic 1",
+      "sub" : "Leorem lpsum is simply dummy text of the\nprinting and typesetting industry"
+    },
+    {
+      "head" : "Update/Train : Topic 1",
+      "sub" : "Leorem lpsum is simply dummy text of the\nprinting and typesetting industry"
+    },
+    {
+      "head" : "Update/Train : Topic 1",
+      "sub" : "Leorem lpsum is simply dummy text of the\nprinting and typesetting industry"
+    },
+    {
+      "head" : "Update/Train : Topic 1",
+      "sub" : "Leorem lpsum is simply dummy text of the\nprinting and typesetting industry"
+    },
+    {
+      "head" : "Update/Train : Topic 1",
+      "sub" : "Leorem lpsum is simply dummy text of the\nprinting and typesetting industry"
+    },
+    {
+      "head" : "Update/Train : Topic 1",
+      "sub" : "Leorem lpsum is simply dummy text of the\nprinting and typesetting industry"
+    },
+    {
+      "head" : "Update/Train : Topic 1",
+      "sub" : "Leorem lpsum is simply dummy text of the\nprinting and typesetting industry"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "main" : "Engineering Glossary",
+  "Immage" : "assets/images/EnggGlosry.png",
+  "logoo" : "assets/images/pg12-1.png",
+  "dropHeadd" : "Branch",
+
+  "heading" : "CAD World presents you all in one glossary for ACM branches finetuned for Design drafters......",
+
+  "Tile" : [
+    {
+      "Topic" : "A"
+    },
+    {
+      "Topic" : "B"
+    },
+    {
+      "Topic" : "C"
+    },
+    {
+      "Topic" : "D"
+    },
+    {
+      "Topic" : "E"
+    },
+    {
+      "Topic" : "F"
+    },
+    {
+      "Topic" : "G"
+    },
+    {
+      "Topic" : "H"
+    },
+    {
+      "Topic" : "I"
+    },
+    {
+      "Topic" : "J"
+    },
+    {
+      "Topic" : "K"
+    },
+    {
+      "Topic" : "L"
+    },
+    {
+      "Topic" : "M"
+    },
+    {
+      "Topic" : "N"
+    },
+    {
+      "Topic" : "O"
+    },
+    {
+      "Topic" : "P"
+    },
+    {
+      "Topic" : "Q"
+    },
+    {
+      "Topic" : "R"
+    },
+    {
+      "Topic" : "S"
+    },
+    {
+      "Topic" : "T"
+    },
+    {
+      "Topic" : "U"
+    },
+    {
+      "Topic" : "V"
+    },
+    {
+      "Topic" : "W"
+    },
+    {
+      "Topic" : "X"
+    },
+    {
+      "Topic" : "Y"
+    },
+    {
+      "Topic" : "Z"
+    }
+
+  ],
+  "textin" : [
+    {
+      "text" : "Acute Angle"
+    },
+    {
+      "text" : "Axis"
+    },
+    {
+      "text" : "Acute Angle"
+    }
+  ]
+
+
+}

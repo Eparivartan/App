@@ -1,0 +1,36 @@
+{
+  "img" : "assets/images/pg12-1.png",
+  "pic": "assets/images/QuestionPaper.png",
+  "details" : [
+    {
+      "head" : "External Training 1",
+      "date" : "Date: 12-Sep-2022",
+      "duration" : "Duration: 10 Min",
+      "image" : "assets/images/demo1.png"
+    },
+    {
+      "head" : "External Training 2",
+      "date" : "Date: 12-Sep-2022",
+      "duration" : "Duration: 10 Min",
+      "image" : "assets/images/demo2.png"
+    },
+    {
+      "head" : "External Training 3",
+      "date" : "Date: 12-Sep-2022",
+      "duration" : "Duration: 10 Min",
+      "image" : "assets/images/demo3.png"
+    },
+    {
+      "head" : "External Training 4",
+      "date" : "Date: 12-Sep-2022",
+      "duration" : "Duration: 10 Min",
+      "image" : "assets/images/demo2.png"
+    },
+    {
+      "head" : "External Training 5",
+      "date" : "Date: 12-Sep-2022",
+      "duration" : "Duration: 10 Min",
+      "image" : "assets/images/demo1.png"
+    }
+  ]
+}

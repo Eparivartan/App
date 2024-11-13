@@ -1,0 +1,104 @@
+{
+  "Immage" : "assets/images/softwareinuse.png",
+  "logoo" : "assets/images/pg12-1.png",
+  "main" : "Software in Use and Commands",
+  "data" : [
+    {
+      "Topic" : "A"
+    },
+    {
+      "Topic" : "B"
+    },
+    {
+      "Topic" : "C"
+    },
+    {
+      "Topic" : "D"
+    },
+    {
+      "Topic" : "E"
+    },
+    {
+      "Topic" : "F"
+    },
+    {
+      "Topic" : "G"
+    },
+    {
+      "Topic" : "H"
+    },
+    {
+      "Topic" : "I"
+    },
+    {
+      "Topic" : "J"
+    },
+    {
+      "Topic" : "K"
+    },
+    {
+      "Topic" : "L"
+    },
+    {
+      "Topic" : "M"
+    },
+    {
+      "Topic" : "N"
+    },
+    {
+      "Topic" : "O"
+    },
+    {
+      "Topic" : "P"
+    },
+    {
+      "Topic" : "Q"
+    },
+    {
+      "Topic" : "R"
+    },
+    {
+      "Topic" : "S"
+    },
+    {
+      "Topic" : "T"
+    },
+    {
+      "Topic" : "U"
+    },
+    {
+      "Topic" : "V"
+    },
+    {
+      "Topic" : "W"
+    },
+    {
+      "Topic" : "X"
+    },
+    {
+      "Topic" : "Y"
+    },
+    {
+      "Topic" : "Z"
+    }
+
+  ],
+  "abt" : [
+    {
+      "software" : "Software",
+      "software1" : "AutoCAD",
+      "released" : "Released by:",
+      "released1": "Dakota Internatonal, USA",
+      "licenses" : "Licenses available \n(Free/Paid) :",
+      "licenses1" : "Free (Limited version); \nPaid",
+      "yofr" : "Year of Release:",
+      "yofr1" : "2010 ver 1.0",
+      "Sftuse" : "Software Use:",
+      "Sftuse1" : "Used in industiry for drawing CAD & CADD design of 2D",
+      "Dec" : "Description:",
+      "Dec1" : "Here are the softwares \ntrending out in the \nindustry and the aspects \nof it when kept to use…",
+      "visit" : "Visit:",
+      "visit1" : "www.autodesk.com/\nautoCAD India"
+    }
+  ]
+}

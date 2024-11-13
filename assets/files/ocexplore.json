@@ -1,0 +1,25 @@
+{
+  "details" : [
+    {
+      "image" : "assets/images/demov_3.png",
+      "title" : "Course Content",
+      "dec" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry…."
+    },
+    {
+      "image" : "assets/images/demoplay.png",
+      "title" : "Chapter 1: Introduction",
+      "dec" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry…."
+    },
+    {
+      "image" : "assets/images/demoplay.png",
+      "title" : "Chapter 2:Course Content",
+      "dec" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry…."
+    },
+    {
+      "image" : "assets/images/demov_2.png",
+      "title" : "Chapter 3:Course Content",
+      "dec" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry…."
+    }
+  ]
+
+}

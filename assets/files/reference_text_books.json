@@ -1,0 +1,26 @@
+{
+  "img" : "assets/images/pg12-1.png",
+  "pic": "assets/images/textbooks.png",
+  "details" : [
+    {
+      "head" : "https://www.google.com/",
+      "sub" : "Author: Jim cat Publication: Jagati Synopsis: content from various companies interviews and Internship books.."
+    },
+    {
+      "head" : "https://www.fb.com",
+      "sub" : "Author: Jim cat Publication: Jagati Synopsis: content from various companies interviews and Internship books.."
+    },
+    {
+      "head" : "https://www.stackoverflow.com",
+      "sub" : "Author: Jim cat Publication: Jagati Synopsis: content from various companies interviews and Internship books.."
+    },
+    {
+      "head" : "Book3: FGB book",
+      "sub" : "Author: Jim cat Publication: Jagati Synopsis: content from various companies interviews and Internship books.."
+    },
+    {
+      "head" : "Book3: FGB book",
+      "sub" : "Author: Jim cat Publication: Jagati Synopsis: content from various companies interviews and Internship books.."
+    }
+  ]
+}

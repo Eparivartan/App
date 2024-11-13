@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "682305739300",
+    "project_id": "careercoach-63e7e",
+    "storage_bucket": "careercoach-63e7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682305739300:android:ffc8a9ec8d03349dd756b1",
+        "android_client_info": {
+          "package_name": "com.eparivartan.careercoach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlXe5Stg6yWYfl5xI2zIv2ETMg44YEChI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

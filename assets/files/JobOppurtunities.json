@@ -1,0 +1,194 @@
+{
+  "main" : "Job Oppurtunities",
+  "sub" : "Job Oppurtunities",
+  "Immage" : "assets/images/JobOppour.png",
+  "logoo" : "assets/images/pg12-1.png",
+  "elvbtn1" : "Freshers",
+  "elvbtn2" : "Experienced",
+  "jobfound" : "Total Jobs Found :",
+  "updt" : "Last post on:",
+
+
+
+  "drphead" : "Branch/Specialization",
+  "drpList" : [
+    {
+      "value": "Architeture"
+    },
+    {
+      "value": "Civil"
+    },
+    {
+      "value": "Mechanical"
+    }
+  ],
+
+  "tile" : [
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 15-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 10-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 13-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 18-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 08-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 05-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 11-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 25-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 17-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 10-01-2023 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    },
+    {
+      "topic" : "ABC limited 20 Chars",
+      "job_title" : "Job Title:",
+      "job_title1" : "Jr. Quality Analyst",
+      "jobs" : "# of jobs:",
+      "no_of_jobs1" : "09",
+      "qualification" : "Qualification:",
+      "qualification1" : "Diploma (Civil) or higher",
+      "post_on" : "Posted on: 27-12-2022 ",
+      "job_id" : "Job ID: CADWF1318",
+      "job_prfl" : "Job profile:",
+      "job_prfl1" : "The selected candidate, \npost on-job training will \nbe assisting Lead drafter \non jobs and will be reporting \nof program manager",
+      "contact" : "Contact:",
+      "contact1" : "Mobile : +91 000345678 \nMail : amalapaul12@abc.com"
+    }
+  ]
+
+}

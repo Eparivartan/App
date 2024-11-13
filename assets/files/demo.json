@@ -1,0 +1,52 @@
+{
+  "Demo" : [
+    {
+      "Image" : "assets/images/demo1.png",
+      "title" : "AutoCAD 2D v1 : Demo Class 1",
+      "date" : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demo2.png",
+      "title" : "AutoCAD 3D v1 : Demo Class 2",
+      "date" : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demo3.png",
+      "title" : "Revit 3D v1 : Demo Class 3",
+      "date" : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demo1.png",
+      "title" : "AutoCAD v11 : Demo Class 4",
+      "date" : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demo2.png",
+      "title" : "AutoCAD v11 : Demo Class 5",
+      "date" : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demo2.png",
+      "title" : "AutoCAD v11 : Demo Class 6",
+      "date" : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    },
+    {
+      "Image" : "assets/images/demo2.png",
+      "title" : "AutoCAD v11 : Demo Class 7",
+      "date" : "Date:12-sep-2022",
+      "duration" : "Duration:10 Min"
+    }
+  ],
+  "img" : "assets/images/pg12-1.png",
+  "timg" : "assets/images/dhyanacademy-logo.png",
+  "pic" : "assets/images/demoimg.png",
+  "head" : "AutoCAD v11 : Demo Class 3",
+  "date" : "Date: 12-Sep-2022",
+  "duration" : "Duration: 10 Min"
+}

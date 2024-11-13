@@ -1,0 +1,114 @@
+{
+  "AllPages" : [
+    {
+      "dhyan" : "assets/images/Dhyan.png",
+      "title" : "Dhyan"
+    },
+    {
+      "dhyan" : "assets/images/collegeInfo.png",
+      "title" : "College \nInformation"
+    },
+    {
+      "dhyan" : "assets/images/Engg.png",
+      "title" : "All About Engineering"
+    },
+    {
+      "dhyan" : "assets/images/learnassist-.png",
+      "title" : "Online \nCourses"
+    },
+    {
+      "dhyan" : "assets/images/jobOpp.png",
+      "title" : "Job \nOppurtunities"
+    },
+    {
+      "dhyan" : "assets/images/interviewprep.png",
+      "title" : "Interview \nPrep"
+    },
+    {
+      "dhyan" : "assets/images/softewareinuse.png",
+      "title" : "Softwares in Use n Commands"
+    },
+    {
+      "dhyan" : "assets/images/TechnologyTrends.png",
+      "title" : "Technology \nTrends"
+    },
+    {
+      "dhyan" : "assets/images/fresher.png",
+      "title" : "Freshers 2 \nIndustry"
+    },
+    {
+      "dhyan" : "assets/images/professional.png",
+      "title" : "For \nProfessionals"
+    },
+    {
+      "dhyan" : "assets/images/learnassist-.png",
+      "title" : "Learn \nAssist"
+    },
+    {
+      "dhyan" : "assets/images/askExperts.png",
+      "title" : "Ask Our \nExperts"
+    },
+    {
+      "dhyan" : "assets/images/Unit Coverter-Icon.png",
+      "title" : "Unit \nConverter"
+    },
+    {
+      "dhyan" : "assets/images/Autocad.png",
+      "title" : "AutoCAD ViewerEditor"
+    },
+    {
+      "dhyan" : "assets/images/Calc.png",
+      "title" : "Calculator"
+    }
+  ],
+  "items" : [
+    {
+      "page" : "/Dhyan"
+    },
+    {
+      "page" : "/College_Information"
+    },
+    {
+      "page" : "/All_About_Engineering"
+    },
+    {
+      "page" : "/Online_Courses"
+    },
+    {
+      "page" : "/Job_Oppurtunities"
+    },
+    {
+      "page" : "/Interview_Prep"
+    },
+    {
+      "page" : "/Softwares_in_Use_n_Commands"
+    },
+    {
+      "page" : "/Technology_Trends"
+    },
+    {
+      "page" : "/Fresher_2_Industry"
+    },
+    {
+      "page" : "/For_Professionals"
+    },
+    {
+      "page" : "/Learn_Assist"
+    },
+    {
+      "page" : "/Ask_Our_Experts"
+    },
+    {
+      "page" : "/Unit_Converter"
+    },
+    {
+      "page" : "/AutoCAD_ViewerEditor"
+    },
+    {
+      "page" : "/Calculator"
+    }
+  ],
+  "botm" : "About CAD World\\n\\n We at CAD World strive to provide continuous learning experience, latest happenings in the world of Mechanical, Civil, Architecture branches who are included in Design,Drafting as passion and more..."
+
+
+}

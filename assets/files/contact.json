@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "image" : "assets/images/contact.png",
+      "data" : "What we are...",
+      "data1" : "We strive to be the One-stop platform for People for People into Architecture, Civil, Mechanical\\nfields, specifically inclined to Design/Drafting\\nknowledge and solutions,",
+      "text" : "1.Post Ads on - Any JOB Openings including Freelancing, Internship, Project works...",
+      "text1": "2.Post Ads on - Engineer colleges, Diploma courses, Online Tutorials, Training Academies, workshops...",
+      "text2": "3.To be done To be done To be done To be done To be done To be done..",
+
+      "icon1": "icon: Icon(Icons.call)",
+      "text3" : "+919X9X9X1234; 040-24892489",
+      "icon2" : "icon: Icon(Icon.message)",
+      "text4" : "support@gmail.com\nenquiry@gmail.com"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+ "course" : [
+  {
+   "Main" : "AutoCAD",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom OR Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course A",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course AB",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course B",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom OR Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course C",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom OR Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course D",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom OR Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course E",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom OR Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course F",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom OR Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  },
+  {
+   "Main" : "Course G",
+   "title" : "Loren epsum:",
+   "data" : "Unleash your creativity because no design is beyond your abilities once you have learned AutoCAD. Become a pro at design. Creating and editing designs in AutoCAD is quick and hassle free.",
+   "title2" : "Training Options:",
+   "TO" : "Classroom OR Online",
+   "title3" : "Course Duration:",
+   "CD" : "30 days @ 2Hrs each",
+   "title4" : "Course Certification:",
+   "CC" : "Yes"
+  }
+ ],
+
+
+ "Course" : "Our range of courses include practical sessions,Tests & Live Demos....",
+ "img" : "assets/images/pg12-1.png",
+ "timg" : "assets/images/dhyanacademy-logo.png",
+ "pic" : "assets/images/construction.png",
+ "call" : "assets/images/Iconcall.png",
+ "mailing" : "assets/images/Iconmail.png",
+ "nos" : " +91 9X9X9X1234; 040-24892489",
+ "mail" : " support@dhyanacademy.com \nenquiry@dhyanacademy.com",
+ "contact" : "Wanted to Join one of our courses ? Did not find the course you are looking for ? Drop an Enquiry to know detailed offerings."
+}

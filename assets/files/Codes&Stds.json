@@ -1,0 +1,35 @@
+{
+  "main" : "Codes And Standards",
+  "Immage" : "assets/images/CodesandStds.png",
+  "logoo" : "assets/images/pg12-1.png",
+
+  "heading" : "Standard is a set of technical definations,Architecture is the art and science of designing and engineering large structures and buildings.",
+
+
+  "Tile1" : [
+
+    {
+      "Topic" : "ASTM"
+    }
+
+  ],
+
+
+  "Tile2" : [
+
+    {
+      "Topic" : "IS 456:2000"
+    }
+
+  ],
+
+  "Tile3" : [
+
+    {
+      "Topic" : "ASME"
+    }
+
+  ]
+
+
+}
