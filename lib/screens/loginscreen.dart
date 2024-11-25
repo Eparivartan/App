@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:legala/constants/imageconstant.dart';
-import 'package:legala/screens/bottomnavigation.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:legala/screens/dummy.dart';
-import 'package:legala/sevices/apiendpoints.dart';
 import 'package:legala/sevices/tokenprovider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/coloconstant.dart';
@@ -49,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       // If the form is valid, proceed further
 
-      const url = 'http://localhost:8080/auth/login';
+      const url = 'https://www.eparivartan.co.in/rentalapp/public/auth/login';
 
       try {
         // Make the POST request
@@ -63,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         // Check if the response is successful
+        
         if (response.statusCode == 200) {
           final responseData = json.decode(response.body);
 
@@ -75,6 +75,13 @@ class _LoginScreenState extends State<LoginScreen> {
             responseData['access_token'],
             responseData['refresh_token'],
           );
+          if (isChecked) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('access_token', responseData['access_token']);
+          await prefs.setString('refresh_token', responseData['refresh_token']);
+          print('Tokens saved in local storage.');
+        }
+        print(isChecked.toString());
           _phonecontroller.clear();
           _passwordController.clear();
           Navigator.push(

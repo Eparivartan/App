@@ -1,6 +1,11 @@
-import 'dart:io';
-import 'dart:math';
+import 'dart:convert';
 
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:legala/screens/bottomnavigation.dart';
+import 'package:legala/sevices/tokenprovider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,6 +16,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:legala/constants/appbarconstant.dart';
 import 'package:legala/constants/coloconstant.dart';
 import 'package:legala/constants/drawer.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class CreateProperties extends StatefulWidget {
   const CreateProperties({super.key});
@@ -31,9 +39,11 @@ class _CreatePropertiesState extends State<CreateProperties> {
   final TextEditingController _city = TextEditingController();
   final TextEditingController _zipcode = TextEditingController();
   final TextEditingController _address = TextEditingController();
-
-  final ImagePicker _picker = ImagePicker();
-  List<File> selectedImages = [];
+  String? propertyimg;
+  String _selectedValue = "0";
+  String? baseFileName;
+  String? selectedImg;
+  File? propertyThumbnail;
 
   void _showImagePickerOptions() {
     showModalBottomSheet(
@@ -48,14 +58,14 @@ class _CreatePropertiesState extends State<CreateProperties> {
                   leading: Icon(Icons.photo_library),
                   title: Text('Gallery'),
                   onTap: () {
-                    _pickImagesFromGallery();
+                    pickImage();
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.camera_alt),
                   title: Text('Camera'),
                   onTap: () {
-                    _captureImageFromCamera();
+                    pickImage();
                   },
                 ),
               ],
@@ -64,33 +74,21 @@ class _CreatePropertiesState extends State<CreateProperties> {
         });
   }
 
-Future<void> _pickImagesFromGallery() async {
-  final List<XFile>? images = await _picker.pickMultiImage();
-  if (images != null) {
-    setState(() {
-      // Extract base filenames and store them
-      selectedImages = images.map((e) => File(e.path)).toList();
-      images.forEach((image) {
-        String baseFileName = image.path.split('/').last;
-        print(baseFileName); // Display base filename
-      });
-    });
-  }
-  Navigator.pop(context); // Close the bottom sheet after picking images
-}
+  String? fileName;
 
-Future<void> _captureImageFromCamera() async {
-  final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-  if (image != null) {
-    setState(() {
-      // Add the captured image to the list and print the base filename
-      selectedImages.add(File(image.path));
-      String baseFileName = image.path.split('/').last;
-      print(baseFileName); // Display base filename
-    });
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        propertyThumbnail = File(pickedFile.path);
+        fileName = propertyThumbnail!.path.split('/').last;
+      });
+    } else {
+      print('No image selected.');
+    }
   }
-  Navigator.pop(context); // Close the bottom sheet after capturing image
-}
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,6 +189,9 @@ Future<void> _captureImageFromCamera() async {
                         SizedBox(
                           height: 1.h,
                         ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
                         Text(
                           'Thumbnail',
                           style: GoogleFonts.urbanist(
@@ -202,6 +203,9 @@ Future<void> _captureImageFromCamera() async {
                           height: 0.5.h,
                         ),
                         uploadpropertyimgs(),
+                        SizedBox(
+                          height: 2.h,
+                        )
                       ],
                     ),
                   ),
@@ -301,7 +305,8 @@ Future<void> _captureImageFromCamera() async {
                   children: [
                     Spacer(),
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 7,horizontal: 16),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 7, horizontal: 16),
                       decoration: BoxDecoration(
                           color: Color(0xffdadada),
                           borderRadius: BorderRadius.circular(4)),
@@ -319,26 +324,93 @@ Future<void> _captureImageFromCamera() async {
                       width: 2.w,
                     ),
                     GestureDetector(
-                      onTap: (){
-                        if(_formKey.currentState!.validate()) {
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final token =
+                              Provider.of<TokenProvider>(context, listen: false)
+                                  .accessToken;
+                          final selectedImg = '${baseFileName}';
+                          final country = 'India';
                           print(_propertytype.text);
-                           print(_propertname.text);
-                            print(_propertysize.text);
-                            print(_yearlytax.text);
-                            print(selectedImages.toString());
-                            print(_country.text);
-                            print(_state.text);
-                            print(_zipcode.text);
-                            print(_address.text);
-        
-        
-        
-                        }else{
+                          print(_propertname.text);
+                          print(_propertysize.text);
+                          print(_yearlytax.text);
+                          print(propertyimg);
+                          print(_country.text);
+                          print(_state.text);
+                          print(_zipcode.text);
+                          print(_address.text);
+                          final url = Uri.parse(
+                              'https://www.eparivartan.co.in/rentalapp/public/user/properties'); // Replace with your API URL
+
+                          // Create a multipart request
+                          var request = http.MultipartRequest('POST', url);
+
+                          // Add headers for authorization
+                          request.headers.addAll({
+                            'Authorization': 'Bearer $token',
+                            'Content-Type': 'multipart/form-data',
+                          });
+
+                          // Add fields (key-value pairs)
+                          request.fields['propertyType'] =
+                              '${_propertytype.text}';
+                          request.fields['propertyName'] =
+                              '${_propertname.text}';
+                          request.fields['propertySize'] =
+                              '${_propertysize.text}';
+                          request.fields['propertyYearlyTax'] =
+                              '${_yearlytax.text}';
+                          request.fields['propertyCountry'] =
+                              '${country.toString()}';
+                          request.fields['propertyState'] = '${_state.text}';
+                          request.fields['propertyCity'] = '${_city.text}';
+                          request.fields['propertyZipcode'] =
+                              '${_zipcode.text}';
+                          request.fields['propertyAddress'] =
+                              '${_address.text}';
+                          request.fields['propertyStatus'] = '1';
+
+                          // Add the file if available
+                          if (propertyThumbnail != null &&
+                              propertyThumbnail!.existsSync()) {
+                            request.files.add(await http.MultipartFile.fromPath(
+                              'propertyThumbnail',
+                              propertyThumbnail!.path,
+                              filename: '${fileName}',
+                            ));
+                          }
+
+                          try {
+                            // Send the request
+                            var response = await request.send();
+
+                            // Handle the response
+                            if (response.statusCode == 201) {
+                              var responseBody =
+                                  await response.stream.bytesToString();
+                              print('Success: ${jsonDecode(responseBody)}');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BottomNavigation()),
+                              );
+                            } else {
+                              var responseBody =
+                                  await response.stream.bytesToString();
+                              print(
+                                  'Error: ${response.statusCode}, ${responseBody}');
+                            }
+                          } catch (e) {
+                            print('Exception: $e');
+                          }
+                        } else {
                           print('Fill whole details');
                         }
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 7,horizontal: 16),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 16),
                         decoration: BoxDecoration(
                             color: ColorConstants.primaryColor,
                             borderRadius: BorderRadius.circular(4)),
@@ -549,49 +621,51 @@ Future<void> _captureImageFromCamera() async {
     );
   }
 
-Widget country() {
-  return Container(
-    child: TextFormField(
-      controller: _country,
-      readOnly: true, // Makes the field read-only
-      style: TextStyle(
-        color: ColorConstants.textcolor,
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-      ),
-      decoration: InputDecoration(
-        fillColor: Color(0xffdadada),
-        contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-        hintText: 'India', // Optional, since 'India' is already the default value
-        hintStyle: GoogleFonts.urbanist(
-          color: ColorConstants.blackcolor,
-          fontSize: 11.sp,
+  Widget country() {
+    return Container(
+      child: TextFormField(
+        controller: _country,
+        readOnly: true, // Makes the field read-only
+        style: TextStyle(
+          color: ColorConstants.textcolor,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Color(0xffdadada), width: 1),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Color(0xffdadada), width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Color(0xffdadada), width: 1),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Color(0xffdadada), width: 1),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Color(0xffdadada), width: 1),
+        decoration: InputDecoration(
+          fillColor: Color(0xffdadada),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+          hintText:
+              'India', // Optional, since 'India' is already the default value
+          hintStyle: GoogleFonts.urbanist(
+            color: ColorConstants.blackcolor,
+            fontSize: 11.sp,
+            fontWeight: FontWeight.w400,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Color(0xffdadada), width: 1),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Color(0xffdadada), width: 1),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Color(0xffdadada), width: 1),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Color(0xffdadada), width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Color(0xffdadada), width: 1),
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget uploadpropertyimgs() {
     return Container(
@@ -608,7 +682,7 @@ Widget country() {
         child: Row(
           children: [
             Container(
-              margin: EdgeInsets.only(left: 6,top: 4,bottom: 4,right: 10),
+              margin: EdgeInsets.only(left: 6, top: 4, bottom: 4, right: 10),
               width: 100,
               padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               decoration: BoxDecoration(
@@ -622,8 +696,13 @@ Widget country() {
                     fontWeight: FontWeight.w400),
               ),
             ),
-
-            Text('No Chosen File',style: GoogleFonts.urbanist(color:Color(0xffababab),fontSize: 11.sp,fontWeight: FontWeight.w500 ),)
+            Text(
+              '${selectedImg != null ? selectedImg : baseFileName} ?? "No Chosenfile',
+              style: GoogleFonts.urbanist(
+                  color: Color(0xffababab),
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w500),
+            )
           ],
         ),
       ),

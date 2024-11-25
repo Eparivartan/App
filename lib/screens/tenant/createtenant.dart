@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:legala/constants/appbarconstant.dart';
 import 'package:legala/constants/coloconstant.dart';
+import 'package:legala/screens/bottomnavigation.dart';
+import 'package:legala/screens/dropdownlist.dart';
+import 'package:legala/screens/tenant/tenantconnectionprovider.dart';
+import 'package:legala/sevices/tokenprovider.dart';
+import 'package:provider/provider.dart';
 
 class CreateTenant extends StatefulWidget {
   const CreateTenant({super.key});
@@ -34,11 +40,7 @@ class _CreateTenantState extends State<CreateTenant> {
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
 
-  // list of p[roperty]
-  List<String> propertyItems = ['Villa', 'Individual House', 'Outhouse'];
-  List<String> UnitItems = ['Category 1', 'Category 2', 'Category 3'];
-  String? selectedPropertyValue;
-  String? selectedCategoryValue;
+  String? multipleimages;
 
   // emailvalidation
 
@@ -58,10 +60,10 @@ class _CreateTenantState extends State<CreateTenant> {
     return null;
   }
 
-  // chooswfile
   final ImagePicker _picker = ImagePicker();
   File? _image;
   String _filePath = '';
+  String baseValue = ''; // Variable to store the base value
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -70,11 +72,20 @@ class _CreateTenantState extends State<CreateTenant> {
         _image = File(pickedFile.path);
         _filePath = pickedFile.path; // Get the file path
       });
+
+      // Example of using the split method
+      // This assumes you want to split the file path by the '/' or '\\' (depending on the OS)
+      List<String> pathParts = _filePath.split('/');
+
+      // For example, extracting the last part (the file name)
+      baseValue = pathParts.last;
+
+      // If you want the file name without the extension
+
+      print('Base Value: $baseValue'); // Output the base value
     }
   }
 
-  // uploadmulti[plefiles
-  // upload multiple files
   Future<void> _pickfile() async {
     try {
       // Pick multiple files
@@ -98,11 +109,24 @@ class _CreateTenantState extends State<CreateTenant> {
         List<String> filePaths =
             result.files.map((file) => file.path!).toList();
 
-        // Do something with the selected file paths
+        // Store base paths in a variable
+        List<String> basePaths = [];
+        setState(() {
+          multipleimages = basePaths.toList().toString();
+        });
+
         for (String filePath in filePaths) {
           print('Selected file: $filePath');
-          // You can upload the files here
+
+          // Split the file path and extract the base path (directory)
+          multipleimages = filePath
+              .split('/')
+              .sublist(0, filePath.split('/').length - 1)
+              .join('/');
         }
+
+        // Now basePaths contains the base paths of all selected files
+        print('Base paths: $basePaths');
       } else {
         print('No files selected.');
       }
@@ -131,6 +155,103 @@ class _CreateTenantState extends State<CreateTenant> {
         ),
       ),
     );
+  }
+
+  Future<void> sendTenantData() async {
+    final token =
+        Provider.of<TokenProvider>(context, listen: false).accessToken;
+    final proprtyid = Provider.of<SelectionProvider>(context, listen: false)
+        .selectedPropertyId;
+    final unitid =
+        Provider.of<SelectionProvider>(context, listen: false).selectedUnitId;
+
+    if (token != null) {
+      print('$token >>>>>>>>>>>>>>>>>>>>>>'); // Log the token for debugging
+      print('${proprtyid}');
+      print('${unitid}');
+      print(_firstname.text);
+      print(_lastname.text);
+      print(_emailtenant.text);
+      print(_phonenumbertenant.text);
+      print(_totalnumbers.text);
+      print(_state.text);
+      print(_city.text);
+      print(_zipcode.text);
+      print(_address.text);
+      print(_startDateController.text);
+      print(_endDateController.text);
+      print(multipleimages.toString());
+
+      // Define the data to be sent in the POST request
+      final requestBody = {
+        "propertyId": '${proprtyid}',
+        "unitId": "${unitid}",
+        "tenantFirstName": "${_firstname.text}",
+        "tenantLastName": "${_lastname}",
+        "tenantEmail": "${_emailtenant.text}",
+        "tenantPhoneNumber": "${_phonenumbertenant.text}",
+        "tenantNumbers": "${_totalnumbers.text}",
+        "tenantProfileImage": "${baseValue.toString()}",
+        "tenantCountry": "India",
+        "tenantStateList": "${_state.text}",
+        "tenantCity": "${_city.text}",
+        "tenantZipcode": "${_zipcode.text}",
+        "tenantAddress": "${_address.text}",
+        "tenantAddDate": "${_startDateController.text}",
+        "startdate": "${_startDateController.text} ",
+        "enddate": "${_endDateController.text}",
+        "documents": "${baseValue.toString()}"
+      };
+
+      try {
+        // Making the POST request
+        final response = await http.post(
+          Uri.parse(
+              'https://www.eparivartan.co.in/rentalapp/public/user/createtenant'),
+          headers: {
+            'Authorization': 'Bearer $token', // Use Bearer scheme for the token
+            'Content-Type': 'application/json', // Ensure JSON content type
+          },
+          body: jsonEncode(requestBody),
+        );
+
+        // Handle the response
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          Fluttertoast.showToast(
+            msg: "Property data submitted successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+          );
+          print("Response: ${response.body}");
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavigation()),
+          );
+        } else {
+          Fluttertoast.showToast(
+            msg: "Failed to submit property data. Error: ${response.body}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+          );
+          print("Error Response: ${response.body}");
+        }
+      } catch (error) {
+        Fluttertoast.showToast(
+          msg: "An error occurred: $error",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+        print("Exception: $error");
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Token is missing!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+      print("Token is null");
+    }
   }
 
   Widget build(BuildContext context) {
@@ -399,34 +520,10 @@ class _CreateTenantState extends State<CreateTenant> {
                       SizedBox(
                         height: 1.h,
                       ),
-                      Text(
-                        'Property',
-                        style: GoogleFonts.urbanist(
-                            color: ColorConstants.blackcolor,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 0.5.h,
-                      ),
-                      propertrydropdown(),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text(
-                        'Unit',
-                        style: GoogleFonts.urbanist(
-                            color: ColorConstants.blackcolor,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 0.5.h,
-                      ),
-                      unitype(),
+
+                      TwoDropdowns(),
+
+                      // PropertyDropdown(),
                       SizedBox(
                         height: 1.h,
                       ),
@@ -485,34 +582,34 @@ class _CreateTenantState extends State<CreateTenant> {
               SizedBox(
                 height: 2.h,
               ),
-              Text(
-                'Start Conditions',
-                style: GoogleFonts.urbanist(
-                    color: ColorConstants.blackcolor,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 0.5.h,
-              ),
-              _startcondition(),
-              SizedBox(
-                height: 2.h,
-              ),
-              Text(
-                'End Conditions',
-                style: GoogleFonts.urbanist(
-                    color: ColorConstants.blackcolor,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 0.5.h,
-              ),
-              _endcondition(),
-              SizedBox(
-                height: 2.h,
-              ),
+              // Text(
+              //   'Start Conditions',
+              //   style: GoogleFonts.urbanist(
+              //       color: ColorConstants.blackcolor,
+              //       fontSize: 13.sp,
+              //       fontWeight: FontWeight.w600),
+              // ),
+              // SizedBox(
+              //   height: 0.5.h,
+              // ),
+              // _startcondition(),
+              // SizedBox(
+              //   height: 2.h,
+              // ),
+              // Text(
+              //   'End Conditions',
+              //   style: GoogleFonts.urbanist(
+              //       color: ColorConstants.blackcolor,
+              //       fontSize: 13.sp,
+              //       fontWeight: FontWeight.w600),
+              // ),
+              // SizedBox(
+              //   height: 0.5.h,
+              // ),
+              // _endcondition(),
+              // SizedBox(
+              //   height: 2.h,
+              // ),
               SizedBox(
                 height: 3.h,
               ),
@@ -539,14 +636,25 @@ class _CreateTenantState extends State<CreateTenant> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        print(_country.toString());
-                        print(_state.toString());
-                        print(_zipcode.toString());
-                        print(_address.toString());
-                      } else {
-                        print('Fill whole details');
-                      }
+                      print('>>>>>>>>>>>>>>>>>>>>>>>>>>');
+                      sendTenantData();
+                      // if (_formKey.currentState!.validate()) {
+                      //   print('>>>>>>>>>>>>>>>>>>>>>>>>>>');
+                      //   // print(_firstname.text);
+                      //   // print(_lastname.text);
+                      //   // print(_emailtenant.text);
+                      //   // print(_phonenumbertenant.text);
+                      //   // print(_totalnumbers.text);
+                      //   // print(_state.text);
+                      //   // print(_city.text);
+                      //   // print(_zipcode.text);
+                      //   // print(_address.text);
+                      //   // print(_startDateController.text);
+                      //   // print(_endDateController.text);
+                      //   // sendTenantData();
+                      // } else {
+                      //   print('Fill whole details');
+                      // }
                     },
                     child: Container(
                       padding:
@@ -748,62 +856,6 @@ class _CreateTenantState extends State<CreateTenant> {
             },
             child: Icon(Icons.calendar_today, color: ColorConstants.textcolor),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget unitype() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: ColorConstants.filterborderColor, width: 1),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true,
-          hint: Text('Select Start Date'),
-          value: selectedCategoryValue,
-          onChanged: (String? newValue) {
-            setState(() {
-              selectedCategoryValue = newValue;
-            });
-          },
-          items: UnitItems.map((String item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
-  Widget propertrydropdown() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: ColorConstants.filterborderColor, width: 1),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true, // Expands dropdown to full width
-          hint: Text('Select Property Type'),
-          value: selectedPropertyValue,
-          onChanged: (String? newValue) {
-            setState(() {
-              selectedPropertyValue = newValue;
-            });
-          },
-          items: propertyItems.map((String item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
-          }).toList(),
         ),
       ),
     );
@@ -1050,7 +1102,6 @@ class _CreateTenantState extends State<CreateTenant> {
           border: Border.all(color: Color(0xffDADADA), width: 1),
         ),
         child: Container(
-          height: 40,
           child: Row(
             children: [
               Container(
@@ -1071,7 +1122,7 @@ class _CreateTenantState extends State<CreateTenant> {
               ),
               Text(
                 _filePath.isNotEmpty
-                    ? 'File Path: $_filePath'
+                    ? 'File Path: $baseValue'
                     : 'No file selected',
                 style: GoogleFonts.urbanist(
                     color: Color(0xffABABAB),
@@ -1223,8 +1274,8 @@ class _CreateTenantState extends State<CreateTenant> {
   Widget _firstName() {
     return Container(
       child: TextFormField(
-        controller: _phonenumbertenant,
-        keyboardType: TextInputType.phone,
+        controller: _firstname,
+        keyboardType: TextInputType.text,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'This field cannot be empty';
