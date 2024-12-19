@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -6,11 +8,17 @@ import 'package:legala/constants/coloconstant.dart';
 import 'package:legala/screens/tenant/tenantconnectionprovider.dart';
 import 'package:legala/sevices/tokenprovider.dart';
 import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class TwoDropdowns extends StatefulWidget {
+  const TwoDropdowns({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _TwoDropdownsState createState() => _TwoDropdownsState();
 }
 
@@ -30,13 +38,13 @@ class _TwoDropdownsState extends State<TwoDropdowns> {
   }
 
   Future<void> fetchProperties() async {
-    final token =
-        Provider.of<TokenProvider>(context, listen: false).accessToken;
+ final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
     try {
       final response = await http.get(
         Uri.parse(
             'https://www.eparivartan.co.in/rentalapp/public/user/getproperties/'),
-        headers: {'Authorization': 'Bearer $token'},
+        headers: {'Authorization': 'Bearer $accessToken'},
       );
 
       if (response.statusCode == 200) {
@@ -122,11 +130,11 @@ class _TwoDropdownsState extends State<TwoDropdowns> {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Color(0xffDADADA), width: 1)),
+              border: Border.all(color: const Color(0xffDADADA), width: 1)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(
               isExpanded: true,
-              hint: Text('Select Property Type'),
+              hint: const Text('Select Property Type'),
               value: propertyTypes.any((property) =>
                       property['propertyId'].toString() ==
                       selectedPropertyValue)
@@ -216,33 +224,33 @@ class _TwoDropdownsState extends State<TwoDropdowns> {
           decoration: InputDecoration(
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xffDADADA), width: 1)),
+                borderSide: const BorderSide(color: Color(0xffDADADA), width: 1)),
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+                borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+                borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
             disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+                borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+                borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           ),
         ),
 
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
 
         // Error Message
         if (errorMessage.isNotEmpty)
           Text(
             errorMessage,
-            style: TextStyle(color: Colors.red),
+            style: const TextStyle(color: Colors.red),
           ),
 
         // Loading Indicator
-        if (isLoading) CircularProgressIndicator(),
+        if (isLoading) const CircularProgressIndicator(),
       ],
     );
   }

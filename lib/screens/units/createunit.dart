@@ -1,5 +1,7 @@
-import 'dart:convert';
+// ignore_for_file: deprecated_member_use, avoid_unnecessary_containers, depend_on_referenced_packages, use_build_context_synchronously, unused_import, duplicate_ignore
+
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -11,9 +13,9 @@ import 'package:legala/models/dropdown.dart';
 import 'package:legala/screens/bottomnavigation.dart';
 import 'package:legala/sevices/tokenprovider.dart';
 import 'package:legala/sevices/unitprovider.dart';
-import 'package:legala/sevices/usedetailsprovider.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateUnit extends StatefulWidget {
   const CreateUnit({super.key});
@@ -33,36 +35,33 @@ class _CreateUnitState extends State<CreateUnit> {
   final TextEditingController _rentamount = TextEditingController();
   final TextEditingController _depositamount = TextEditingController();
   final TextEditingController _gstnumber = TextEditingController();
-  @override
-  List<String> categoryItems = ["monthly","6months","yearly"];
+  List<String> categoryItems = ["monthly", "6months", "yearly"];
   String? selectedCategoryValue;
   String? unitimg;
 
-// upload images
-  final ImagePicker _picker = ImagePicker();
-  List<File> selectedImages = [];
+  File? unitThumbnail;
 
   void _showImagePickerOptions() {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           return Container(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text('Gallery'),
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text('Gallery'),
                   onTap: () {
-                    _pickImagesFromGallery();
+                    pickImage();
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.camera_alt),
-                  title: Text('Camera'),
+                  leading: const Icon(Icons.camera_alt),
+                  title: const Text('Camera'),
                   onTap: () {
-                    _captureImageFromCamera();
+                    pickImage();
                   },
                 ),
               ],
@@ -71,121 +70,107 @@ class _CreateUnitState extends State<CreateUnit> {
         });
   }
 
-  Future<void> _pickImagesFromGallery() async {
-    final List<XFile>? images = await _picker.pickMultiImage();
-    if (images != null) {
+  String? fileName;
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
       setState(() {
-        // Extract base filenames and store them
-        selectedImages = images.map((e) => File(e.path)).toList();
-        images.forEach((image) {
-          String baseFileName = image.path.split('/').last;
-          print(baseFileName);
-          unitimg = baseFileName; // Display base filename
-        });
+        unitThumbnail = File(pickedFile.path);
+        fileName = unitThumbnail!.path.split('/').last;
       });
-    }
-    Navigator.pop(context); // Close the bottom sheet after picking images
-  }
-
-  Future<void> _captureImageFromCamera() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-    if (image != null) {
-      setState(() {
-        selectedImages.add(File(image.path));
-      });
-    }
-    Navigator.pop(context); // Close the bottom sheet after capturing image
-  }
-
-  Future<void> sendPropertyData() async {
-        final proprtyid = Provider.of<PropertyProvider>(context).selectedPropertyId;
-
-    final token =
-        Provider.of<TokenProvider>(context, listen: false).accessToken;
-    final userProvider =
-        Provider.of<UserProvider>(context, listen: false).userId;
-    print(proprtyid.toString());
-
-    if (token != null ) {
-      print('$token >>>>>>>>>>>>>>>>>>>>>>'); // Log the token for debugging
-
-      // Define the data to be sent in the POST request
-      final requestBody = {
-        "propertyId":'${proprtyid}',
-        "unitName": "${_unitname.text}",
-        "unitSize": '${_unitsize.text}.00',
-        "bedrooms": '${_bathroom.text}',
-        "bathrooms": '${_bathroom.text}',
-        "rentAmount": '${_rentamount.text}',
-        "rentType": "${selectedCategoryValue.toString()}",
-        "depositAmount":"${_depositamount.text}",
-        "gstNumber": "",
-        "thumbnail": "${unitimg}"
-      };
-
-      try {
-        // Making the POST request
-        final response = await http.post(
-          Uri.parse(
-              'https://www.eparivartan.co.in/rentalapp/public/user/unit'),
-          headers: {
-            'Authorization': 'Bearer $token', // Use Bearer scheme for the token
-            'Content-Type': 'application/json', // Ensure JSON content type
-          },
-          body: jsonEncode(requestBody),
-        );
-        print("Status Code: ${response}");
-        print("Status Code: ${response.statusCode}");
-
-        // Handle the response
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          Fluttertoast.showToast(
-            msg: "Property data submitted successfully!",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-          );
-          print("Response: ${response.body}");
-
-          // Reset the form fields after successful submission
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => BottomNavigation()),
-          );
-        } else {
-          Fluttertoast.showToast(
-            msg:
-                "Failed to submit property data. Error: ${response.statusCode}",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-          );
-          print("Error Response: ${response.body}");
-        }
-      } catch (error) {
-        Fluttertoast.showToast(
-          msg: "An error occurred: $error",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
-        print("Exception: $error");
-      }
     } else {
-      Fluttertoast.showToast(
-        msg: "Token is missing!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-      );
-      print("Token is null");
+          Fluttertoast.showToast(
+      msg: "No image selected.", // Message to display
+      toastLength: Toast.LENGTH_SHORT, // Duration of the toast (short or long)
+      gravity: ToastGravity.BOTTOM, // Position of the toast (top, center, bottom)
+      timeInSecForIosWeb: 1, // iOS/Web toast duration
+      backgroundColor: Colors.black, // Background color
+      textColor: Colors.white, // Text color
+      fontSize: 16.0, // Text font size
+    );
+      
     }
   }
+  
+Future<void> _createUnit() async {
+ 
+  try {
+     final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final propertyId =
+        Provider.of<PropertyProvider>(context, listen: false).selectedPropertyId;
 
+    final url =
+        Uri.parse('https://www.eparivartan.co.in/rentalapp/public/user/unit');
+
+    // Create a multipart request
+    var request = http.MultipartRequest('POST', url);
+  
+
+
+    // Add headers for authorization
+    request.headers.addAll({
+      'Authorization': 'Bearer $accessToken',
+      'Content-Type': 'multipart/form-data',
+    });
+
+    // Add fields
+    request.fields['propertyId'] = propertyId.toString();
+    request.fields['unitName'] = _unitname.text;
+    request.fields['unitSize'] = '${_unitsize.text}.00';
+    request.fields['bedrooms'] = _bedsroom.text;
+    request.fields['bathrooms'] = _bathroom.text;
+    request.fields['rentAmount'] = _rentamount.text;
+    request.fields['rentType'] = selectedCategoryValue.toString();
+    request.fields['depositAmount'] = _depositamount.text;
+    request.fields['gstNumber'] = _gstnumber.text;
+
+    // Add file if available
+    if (unitThumbnail != null && unitThumbnail!.existsSync()) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'thumbnail',
+        unitThumbnail!.path,
+        filename: fileName,
+      ));
+    }
+
+    // Send the request
+    var response = await request.send();
+
+   
+
+    // Handle the response
+    if (response.statusCode == 201) {
+      var responseBody = await response.stream.bytesToString();
+    
+      Navigator.push(
+        // ignore: use_build_context_synchronously
+        context,
+        MaterialPageRoute(builder: (context) => const BottomNavigation()),
+      );
+    } else {
+      var responseBody = await response.stream.bytesToString();
+     
+    }
+  } catch (e) {
+    Fluttertoast(
+      
+    );
+  }
+}
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -194,7 +179,7 @@ class _CreateUnitState extends State<CreateUnit> {
                   height: 4.h,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: Text(
                     'Create Unit',
                     style: GoogleFonts.urbanist(
@@ -210,7 +195,7 @@ class _CreateUnitState extends State<CreateUnit> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                     decoration: BoxDecoration(
                         color: ColorConstants.whiteColor,
                         borderRadius: BorderRadius.circular(10)),
@@ -220,12 +205,12 @@ class _CreateUnitState extends State<CreateUnit> {
                         SizedBox(
                           height: 1.h,
                         ),
-                       
+
                         SizedBox(
                           height: 0.5.h,
                         ),
                         // getproperty(),
-                        UnitDropdown(),
+                        const UnitDropdown(),
                         SizedBox(
                           height: 1.h,
                         ),
@@ -293,7 +278,7 @@ class _CreateUnitState extends State<CreateUnit> {
                   height: 4.h,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
                   decoration: BoxDecoration(
                       color: ColorConstants.whiteColor,
                       borderRadius: BorderRadius.circular(10)),
@@ -382,12 +367,12 @@ class _CreateUnitState extends State<CreateUnit> {
                 ),
                 Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Container(
                       padding:
-                          EdgeInsets.symmetric(vertical: 7, horizontal: 16),
+                          const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
                       decoration: BoxDecoration(
-                          color: Color(0xffdadada),
+                          color: const Color(0xffdadada),
                           borderRadius: BorderRadius.circular(4)),
                       child: Center(
                         child: Text(
@@ -403,17 +388,15 @@ class _CreateUnitState extends State<CreateUnit> {
                       width: 2.w,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                        sendPropertyData();
-                        print(selectedCategoryValue.toString());
-                        } else {
-                          print('Fill whole details');
-                        }
+                      onTap: ()  {
+                         
+                    
+                         
+                          _createUnit();
                       },
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(vertical: 7, horizontal: 16),
+                            const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
                         decoration: BoxDecoration(
                             color: ColorConstants.primaryColor,
                             borderRadius: BorderRadius.circular(4)),
@@ -443,7 +426,7 @@ class _CreateUnitState extends State<CreateUnit> {
 
   Widget getproperty() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: ColorConstants.filterborderColor, width: 1),
@@ -451,7 +434,7 @@ class _CreateUnitState extends State<CreateUnit> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           isExpanded: true, // Expands dropdown to full width
-          hint: Text('Select Property Type'),
+          hint: const Text('Select Property Type'),
           value: selectedPropertyValue,
           onChanged: (String? newValue) {
             setState(() {
@@ -480,7 +463,7 @@ class _CreateUnitState extends State<CreateUnit> {
           }
           return null; // Return null if validation is successful
         },
-        style: TextStyle(
+        style: const TextStyle(
           color: ColorConstants.textcolor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -488,27 +471,27 @@ class _CreateUnitState extends State<CreateUnit> {
         decoration: InputDecoration(
           fillColor: ColorConstants.whiteColor,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           hintText: 'Enter Property Name',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
               color: ColorConstants.textcolor,
               fontSize: 16,
               fontWeight: FontWeight.w400),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
         ),
       ),
     );
@@ -525,7 +508,7 @@ class _CreateUnitState extends State<CreateUnit> {
           }
           return null; // Return null if validation is successful
         },
-        style: TextStyle(
+        style: const TextStyle(
           color: ColorConstants.textcolor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -533,27 +516,27 @@ class _CreateUnitState extends State<CreateUnit> {
         decoration: InputDecoration(
           fillColor: ColorConstants.whiteColor,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           hintText: 'Enter Property Size',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
               color: ColorConstants.textcolor,
               fontSize: 16,
               fontWeight: FontWeight.w400),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
         ),
       ),
     );
@@ -570,7 +553,7 @@ class _CreateUnitState extends State<CreateUnit> {
           }
           return null; // Return null if validation is successful
         },
-        style: TextStyle(
+        style: const TextStyle(
           color: ColorConstants.textcolor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -578,27 +561,27 @@ class _CreateUnitState extends State<CreateUnit> {
         decoration: InputDecoration(
           fillColor: ColorConstants.whiteColor,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           hintText: 'Enter Howmany bedrooms',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
               color: ColorConstants.textcolor,
               fontSize: 16,
               fontWeight: FontWeight.w400),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
         ),
       ),
     );
@@ -615,7 +598,7 @@ class _CreateUnitState extends State<CreateUnit> {
           }
           return null; // Return null if validation is successful
         },
-        style: TextStyle(
+        style: const TextStyle(
           color: ColorConstants.textcolor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -623,27 +606,27 @@ class _CreateUnitState extends State<CreateUnit> {
         decoration: InputDecoration(
           fillColor: ColorConstants.whiteColor,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           hintText: 'Enter Howmany Bathrooms',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
               color: ColorConstants.textcolor,
               fontSize: 16,
               fontWeight: FontWeight.w400),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
         ),
       ),
     );
@@ -662,7 +645,7 @@ class _CreateUnitState extends State<CreateUnit> {
           }
           return null; // Return null if validation is successful
         },
-        style: TextStyle(
+        style: const TextStyle(
           color: ColorConstants.textcolor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -670,27 +653,27 @@ class _CreateUnitState extends State<CreateUnit> {
         decoration: InputDecoration(
           fillColor: ColorConstants.whiteColor,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           hintText: 'Enter Rental Amount',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
               color: ColorConstants.textcolor,
               fontSize: 16,
               fontWeight: FontWeight.w400),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
         ),
       ),
     );
@@ -698,7 +681,7 @@ class _CreateUnitState extends State<CreateUnit> {
 
   Widget renttype() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: ColorConstants.filterborderColor, width: 1),
@@ -706,13 +689,12 @@ class _CreateUnitState extends State<CreateUnit> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           isExpanded: true,
-          hint: Text('Select Rent Type'),
+          hint: const Text('Select Rent Type'),
           value: selectedCategoryValue,
           onChanged: (String? newValue) {
             setState(() {
               selectedCategoryValue = newValue;
             });
-            
           },
           items: categoryItems.map((String item) {
             return DropdownMenuItem<String>(
@@ -730,7 +712,7 @@ class _CreateUnitState extends State<CreateUnit> {
       child: TextFormField(
         controller: _gstnumber,
         keyboardType: TextInputType.number,
-        style: TextStyle(
+        style: const TextStyle(
           color: ColorConstants.textcolor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -738,27 +720,27 @@ class _CreateUnitState extends State<CreateUnit> {
         decoration: InputDecoration(
           fillColor: ColorConstants.whiteColor,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           hintText: 'Enter Gstnumber(optional)',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
               color: ColorConstants.textcolor,
               fontSize: 16,
               fontWeight: FontWeight.w400),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
         ),
       ),
     );
@@ -775,7 +757,7 @@ class _CreateUnitState extends State<CreateUnit> {
           }
           return null; // Return null if validation is successful
         },
-        style: TextStyle(
+        style: const TextStyle(
           color: ColorConstants.textcolor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -783,27 +765,27 @@ class _CreateUnitState extends State<CreateUnit> {
         decoration: InputDecoration(
           fillColor: ColorConstants.whiteColor,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           hintText: 'Enter Deposit Amount',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
               color: ColorConstants.textcolor,
               fontSize: 16,
               fontWeight: FontWeight.w400),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Color(0xffdadada), width: 1)),
+              borderSide: const BorderSide(color: Color(0xffdadada), width: 1)),
         ),
       ),
     );
@@ -818,15 +800,15 @@ class _CreateUnitState extends State<CreateUnit> {
       decoration: BoxDecoration(
           color: ColorConstants.whiteColor,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color(0xffDADADA), width: 1)),
+          border: Border.all(color: const Color(0xffDADADA), width: 1)),
       child: GestureDetector(
         onTap: () {
           _showImagePickerOptions();
         },
         child: Container(
           width: 100,
-          padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+          decoration: const BoxDecoration(
             color: Color(0xffe9e9e9),
           ),
           child: Text(

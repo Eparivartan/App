@@ -7,15 +7,15 @@ class TenantModel {
     if (json['alltenants'] != null) {
       alltenants = <Alltenants>[];
       json['alltenants'].forEach((v) {
-        alltenants!.add(new Alltenants.fromJson(v));
+        alltenants!.add( Alltenants.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.alltenants != null) {
-      data['alltenants'] = this.alltenants!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    if (alltenants != null) {
+      data['alltenants'] = alltenants!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -68,20 +68,20 @@ class Alltenants {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['tenantId'] = this.tenantId;
-    data['tenantFirstName'] = this.tenantFirstName;
-    data['tenantLastName'] = this.tenantLastName;
-    data['tenantEmail'] = this.tenantEmail;
-    data['tenantPhoneNumber'] = this.tenantPhoneNumber;
-    data['tenantNumbers'] = this.tenantNumbers;
-    data['tenantProfileImage'] = this.tenantProfileImage;
-    data['tenantCountry'] = this.tenantCountry;
-    data['tenantStateList'] = this.tenantStateList;
-    data['tenantCity'] = this.tenantCity;
-    data['tenantZipcode'] = this.tenantZipcode;
-    data['tenantAddress'] = this.tenantAddress;
-    data['tenantAddDate'] = this.tenantAddDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['tenantId'] = tenantId;
+    data['tenantFirstName'] = tenantFirstName;
+    data['tenantLastName'] = tenantLastName;
+    data['tenantEmail'] = tenantEmail;
+    data['tenantPhoneNumber'] = tenantPhoneNumber;
+    data['tenantNumbers'] = tenantNumbers;
+    data['tenantProfileImage'] = tenantProfileImage;
+    data['tenantCountry'] = tenantCountry;
+    data['tenantStateList'] = tenantStateList;
+    data['tenantCity'] = tenantCity;
+    data['tenantZipcode'] = tenantZipcode;
+    data['tenantAddress'] = tenantAddress;
+    data['tenantAddDate'] = tenantAddDate;
     return data;
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, unnecessary_this
+
 class PropertiesDisplay {
   List<Allproperties>? allproperties;
 
@@ -13,10 +15,11 @@ class PropertiesDisplay {
   }
 
   Map<String, dynamic> toJson() {
+    // ignore: prefer_collection_literals
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.allproperties != null) {
       data['allproperties'] =
-          this.allproperties!.map((v) => v.toJson()).toList();
+          allproperties!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -72,6 +75,7 @@ class Allproperties {
   }
 
   Map<String, dynamic> toJson() {
+    // ignore: prefer_collection_literals
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['propertyId'] = this.propertyId;
     data['propertyType'] = this.propertyType;

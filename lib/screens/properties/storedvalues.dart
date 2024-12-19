@@ -1,13 +1,18 @@
-import 'dart:convert';
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+
 import 'dart:io';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:legala/sevices/tokenprovider.dart';
 import 'package:provider/provider.dart'; // Assuming you are using Provider to manage the token
+// ignore: depend_on_referenced_packages
 import 'package:http_parser/http_parser.dart'; // Import for MediaType
 
 class PropertyFormPage extends StatefulWidget {
+  const PropertyFormPage({super.key});
+
   @override
   _PropertyFormPageState createState() => _PropertyFormPageState();
 }
@@ -72,21 +77,17 @@ class _PropertyFormPageState extends State<PropertyFormPage> {
 
       // Send the request
       var response = await request.send();
-      print(response.statusCode);
-      print(response.stream);
-
+     
       // Handling the response
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("Property data sent successfully!");
-        print("Response: ${response.persistentConnection}");
-        print(response);
+       
+       
       } else {
-        print("Failed to send property data. Status Code: ${response.statusCode}");
-        print("Error: ${response}");
+       
       }
     } catch (e) {
       // Error Handling
-      print("An error occurred: $e");
+    
     }
   }
 
@@ -114,9 +115,9 @@ class _PropertyFormPageState extends State<PropertyFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Property Details', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              SizedBox(height: 16),
-              TextField(controller: _propertytype, decoration: InputDecoration(labelText: 'Property Type')),
+              const Text('Property Details', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+              TextField(controller: _propertytype, decoration: const InputDecoration(labelText: 'Property Type')),
               TextField(controller: _propertname, decoration: InputDecoration(labelText: 'Property Name')),
               TextField(controller: _propertysize, decoration: InputDecoration(labelText: 'Property Size')),
               TextField(controller: _yearlytax, decoration: InputDecoration(labelText: 'Yearly Tax')),

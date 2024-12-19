@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, duplicate_ignore
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,14 +9,18 @@ import 'package:legala/constants/appbarconstant.dart';
 import 'package:legala/constants/coloconstant.dart';
 import 'package:legala/constants/drawer.dart';
 import 'package:legala/constants/filterconstant.dart';
+
+// ignore: unused_import
 import 'package:legala/constants/imageconstant.dart';
 import 'package:legala/models/propertylistview.dart';
 import 'package:legala/models/uermodel.dart';
 import 'package:legala/screens/properties/createpropertiess.dart';
+// ignore: unused_import
 import 'package:legala/screens/properties/storedvalues.dart';
-import 'package:legala/sevices/tokenprovider.dart';
 import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PropertyList extends StatefulWidget {
   const PropertyList({super.key});
@@ -35,12 +41,12 @@ class _PropertyListState extends State<PropertyList> {
   }
 
   Future<void> fetchProperties() async {
-    final token = Provider.of<TokenProvider>(context, listen: false).accessToken;
-    try {
+ final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');    try {
       final response = await http.get(
         Uri.parse(
             'https://www.eparivartan.co.in/rentalapp/public/user/getproperties/'),
-        headers: {'Authorization': 'Bearer $token'},
+        headers: {'Authorization': 'Bearer $accessToken'},
       );
 
       if (response.statusCode == 200) {
@@ -53,7 +59,7 @@ class _PropertyListState extends State<PropertyList> {
                 .toList();
             isLoading = false;
           });
-          print(response.body);
+          
         } else {
           setState(() {
             isLoading = false;
@@ -74,14 +80,16 @@ class _PropertyListState extends State<PropertyList> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.searchfield,
+      // ignore: prefer_const_constructors
       appBar: CustomAppBar(), // Call your reusable CustomAppBar here
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +97,7 @@ class _PropertyListState extends State<PropertyList> {
               SizedBox(
                 height: 4.h,
               ),
-              FilterConstant(),
+              const FilterConstant(),
               SizedBox(
                 height: 3.h,
               ),
@@ -100,6 +108,7 @@ class _PropertyListState extends State<PropertyList> {
                     'Properties',
                     style: GoogleFonts.urbanist(
                         color: ColorConstants.secondaryColor,
+                        // ignore: deprecated_member_use
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w700),
                   ),
@@ -108,12 +117,14 @@ class _PropertyListState extends State<PropertyList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CreateProperties()),
+                            builder: (context) => const CreateProperties()),
                       );
                     },
+                    // ignore: avoid_unnecessary_containers
                     child: Container(
                       child: Row(
                         children: [
+                          // ignore: prefer_const_constructors
                           Icon(
                             Icons.add,
                             color: ColorConstants.primaryColor,
@@ -123,6 +134,7 @@ class _PropertyListState extends State<PropertyList> {
                             'Create Property',
                             style: GoogleFonts.urbanist(
                                 color: ColorConstants.primaryColor,
+                                // ignore: deprecated_member_use
                                 fontSize: 11.sp,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -137,7 +149,7 @@ class _PropertyListState extends State<PropertyList> {
               ),
 
 
-              PropertyListView(),
+              const PropertyListView(),
              
             ],
           ),

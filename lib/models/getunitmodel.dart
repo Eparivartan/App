@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 class Getunits {
   List<Allunits>? allunits;
 
@@ -7,15 +9,15 @@ class Getunits {
     if (json['allunits'] != null) {
       allunits = <Allunits>[];
       json['allunits'].forEach((v) {
-        allunits!.add(new Allunits.fromJson(v));
+        allunits!.add(Allunits.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.allunits != null) {
-      data['allunits'] = this.allunits!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (allunits != null) {
+      data['allunits'] = allunits!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -62,7 +64,7 @@ class Allunits {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['unitId'] = this.unitId;
     data['propertyId'] = this.propertyId;
     data['unitName'] = this.unitName;

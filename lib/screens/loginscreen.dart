@@ -1,7 +1,12 @@
+// ignore_for_file: avoid_unnecessary_containers, use_build_context_synchronously, non_constant_identifier_names, duplicate_ignore, dead_code, deprecated_member_use
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:legala/constants/services.dart';
+import 'package:legala/screens/codecerifier.dart';
 import 'package:provider/provider.dart';
 import 'package:legala/constants/imageconstant.dart';
 // ignore: depend_on_referenced_packages
@@ -19,12 +24,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  @override
   final TextEditingController _phonecontroller = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isObscured = true;
   bool isChecked = false;
+  bool _isLoading = false;
+
+  // ignore: non_constant_identifier_names
   String? access_token;
   String? refresh_token;
 
@@ -44,180 +51,196 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  void _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      // If the form is valid, proceed further
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
 
-      const url = 'https://www.eparivartan.co.in/rentalapp/public/auth/login';
+  Future<void> _submitForm() async {
+    if (!_formKey.currentState!.validate()) {
+      showToast('Form is not valid');
+      return;
+    }
 
-      try {
-        // Make the POST request
-        final response = await http.post(
-          Uri.parse(url),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "userEmailid": _phonecontroller.text,
-            "userPassword": _passwordController.text,
-          }),
+    setState(() {
+      _isLoading = true;
+    });
+
+    const url = 'https://www.eparivartan.co.in/rentalapp/public/auth/login';
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "userEmailid": _phonecontroller.text,
+          "userPassword": _passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        Provider.of<TokenProvider>(context, listen: false).setTokens(
+          responseData['access_token'],
+          responseData['refresh_token'],
         );
 
-        // Check if the response is successful
-        
-        if (response.statusCode == 200) {
-          final responseData = json.decode(response.body);
-
-          print(responseData);
-          print(responseData['message']);
-          print(responseData['access_token']);
-          print(responseData['refresh_token']);
-
-          Provider.of<TokenProvider>(context, listen: false).setTokens(
-            responseData['access_token'],
-            responseData['refresh_token'],
-          );
-          if (isChecked) {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('access_token', responseData['access_token']);
           await prefs.setString('refresh_token', responseData['refresh_token']);
-          print('Tokens saved in local storage.');
-        }
-        print(isChecked.toString());
-          _phonecontroller.clear();
-          _passwordController.clear();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Sucesffuly()),
-          );
 
-          print('Response saved successfully in local storage.');
-        } else {
-          print('Failed to login: ${response.statusCode}');
-        }
-      } catch (e) {
-        print('Error: $e');
+        _phonecontroller.clear();
+        _passwordController.clear();
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Sucesffuly()));
+
+        showToast('Response saved successfully in local storage.');
+      } else {
+        showToast('Error: wrong credentials');
       }
-    } else {
-      print("Form is not valid");
+    } catch (e) {
+      showToast('Error: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConstants.whiteColor,
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 60,
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Image.asset(
-                    ImageConstants.LOGO,
-                    height: 55,
-                    width: 200,
+    return WillPopScope(
+          onWillPop: () async {
+      // You can handle the back button here. 
+      // For example, if you want to prevent exiting the app:
+      bool shouldExit = false; // Set this to true if you want to exit the app
+      if (shouldExit) {
+        return true; // Allow exiting the app
+      } else {
+        Navigator.pop(context); // Navigate to the previous screen
+        return false; // Prevent exiting the app
+      }
+    },
+
+      child: Scaffold(
+        backgroundColor: ColorConstants.whiteColor,
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 60,
                   ),
-                ),
-                SizedBox(
-                  height: 70,
-                ),
-                Container(
-                  width: 250,
-                  child: Text('Welcome to Legala Rental App!',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: GoogleFonts.urbanist(
-                          color: Color(0xff192252),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold)),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Sign in your account',
-                  style: GoogleFonts.urbanist(
-                      color: Color(0xff848FAC),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text('Your Email',
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Image.asset(
+                      ImageConstants.LOGO,
+                      height: 55,
+                      width: 200,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
+                  SizedBox(
+                    width: 250,
+                    child: Text('Welcome to Legala Rental App!',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: GoogleFonts.urbanist(
+                            color: const Color(0xff192252),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Sign in your account',
                     style: GoogleFonts.urbanist(
-                        color: ColorConstants.secondaryColor,
+                        color: const Color(0xff848FAC),
                         fontSize: 14,
-                        fontWeight: FontWeight.w500)),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  child: TextFormField(
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text('Your Email',
+                      style: GoogleFonts.urbanist(
+                          color: ColorConstants.secondaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
                     controller: _phonecontroller,
                     keyboardType: TextInputType.name,
                     validator: emailValidator,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: ColorConstants.textcolor,
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
                     decoration: InputDecoration(
                       fillColor: ColorConstants.whiteColor,
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                           vertical: 15.0, horizontal: 10.0),
                       hintText: 'Email Address',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                           color: ColorConstants.textcolor,
                           fontSize: 16,
                           fontWeight: FontWeight.w400),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Text('Your Password',
-                    style: GoogleFonts.urbanist(
-                        color: ColorConstants.secondaryColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500)),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  // height: 48,
-                  child: TextFormField(
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text('Your Password',
+                      style: GoogleFonts.urbanist(
+                          color: ColorConstants.secondaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500)),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
                     controller: _passwordController,
                     obscureText: _isObscured,
                     keyboardType: TextInputType.visiblePassword,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: ColorConstants.textcolor,
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -225,31 +248,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                       fillColor: ColorConstants.textcolor,
                       hintText: 'Password',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: ColorConstants.textcolor,
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              BorderSide(color: Color(0xff192252), width: 1)),
+                          borderSide: const BorderSide(
+                              color: Color(0xff192252), width: 1)),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isObscured ? Icons.visibility_off : Icons.visibility,
@@ -263,64 +286,81 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                      activeColor: ColorConstants
-                          .primaryColor, // Custom fill color when checked
-                    ),
-                    Text('Remember Me',
-                        style: GoogleFonts.urbanist(
-                            color: ColorConstants.textcolor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500)),
-                    Spacer(),
-                    TextButton(
-                      onPressed: () {
-                        // Handle "Forgot Password" button press
-                        showEmailDialog(context);
-                      },
-                      child: Text('Forgot Password',
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                        activeColor: ColorConstants
+                            .primaryColor, // Custom fill color when checked
+                      ),
+                      Text('Remember Me',
                           style: GoogleFonts.urbanist(
                               color: ColorConstants.textcolor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500)),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: _submitForm,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: ColorConstants.primaryColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text('Log In',
-                          style: GoogleFonts.plusJakartaSans(
-                              color: ColorConstants.whiteColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600)),
-                    ),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          // Handle "Forgot Password" button press
+                          showEmailDialog(context);
+                        },
+                        child: Text('Forgot Password',
+                            style: GoogleFonts.urbanist(
+                                color: ColorConstants.textcolor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          backgroundColor: ColorConstants.primaryColor,
+                          semanticsLabel: ImageConstants.LOGO,
+                        ))
+                      : GestureDetector(
+                          onTap: _isLoading ? null : _submitForm,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: _isLoading
+                                  ? ColorConstants.primaryColor
+                                  : ColorConstants.primaryColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: _isLoading
+                                  ? Image.asset(
+                                      'assets/images/logo.png',
+                                      height: 60,
+                                      width: 40,
+                                    )
+                                  : Text(
+                                      'Log In',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
             ),
           ),
         ),
@@ -334,7 +374,7 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (BuildContext context) {
         return Stack(
           children: [
-            Container(
+            const SizedBox(
               width: double.infinity,
               child: AlertDialog(
                 shape: RoundedRectangleBorder(
@@ -345,16 +385,15 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Positioned(
                 right: 13,
-                top: 225,
+                top: 220,
                 child: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Container(
-                        child: Image.asset(
+                    child: Image.asset(
                       ImageConstants.CLOSEBUTTON,
                       height: 40,
-                    ))))
+                    )))
           ],
         );
       },
@@ -363,13 +402,93 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 class EmailForm extends StatefulWidget {
+  const EmailForm({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _EmailFormState createState() => _EmailFormState();
 }
 
 class _EmailFormState extends State<EmailForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+
+  bool isLoading = false;
+
+  // Show loader dialog
+  void showLoader() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            backgroundColor: ColorConstants.whiteColor,
+            semanticsLabel: ImageConstants.LOGO,
+            color:ColorConstants.primaryColor,
+          ),
+        );
+      },
+    );
+  }
+
+  // Hide loader dialog
+  void hideLoader() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const CodeVerifier()));
+  }
+
+  // Function to send forgot password request
+  Future<void> sendForgotPasswordRequest(String email) async {
+    const String url = "${ApiConstants.baseUrl}${ApiConstants.forgotpassword}";
+
+    showLoader(); // Show loader before starting API call
+
+    try {
+      final Map<String, String> body = {'email': email};
+
+      final response = await http.post(Uri.parse(url), body: body);
+
+      hideLoader(); // Hide loader when response is received
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+
+        if (responseData['message'] == "Successfully changed") {
+          // Navigate to NewPassword screen
+          hideLoader();
+        } else if (responseData['message'] == "Record does not exist") {
+          // Show toast for 'Record does not exist'
+          Fluttertoast.showToast(
+            msg: "Record does not exist",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+          );
+        } else {
+          // Handle other messages
+          Fluttertoast.showToast(
+            msg: responseData['message'] ?? 'Unknown response',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+          );
+        }
+      } else {
+        // Handle non-200 status codes
+        Fluttertoast.showToast(
+          msg: "Error: ${response.statusCode}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+      }
+    } catch (e) {
+      hideLoader(); // Hide loader in case of error
+      Fluttertoast.showToast(
+        msg: "Something went wrong: $e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -384,24 +503,24 @@ class _EmailFormState extends State<EmailForm> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: GoogleFonts.urbanist(
-                    color: Color(0xff192252),
+                    color: const Color(0xff192252),
                     fontSize: 24,
                     fontWeight: FontWeight.bold)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
             'Enter your email account to reset your password',
             style: GoogleFonts.urbanist(
-                color: Color(0xff848FAC),
+                color: const Color(0xff848FAC),
                 fontSize: 14,
                 fontWeight: FontWeight.w400),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text('Your Email',
@@ -409,7 +528,7 @@ class _EmailFormState extends State<EmailForm> {
                   color: ColorConstants.secondaryColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w500)),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           TextFormField(
@@ -417,27 +536,32 @@ class _EmailFormState extends State<EmailForm> {
             decoration: InputDecoration(
               fillColor: ColorConstants.whiteColor,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
               hintText: 'Email Address',
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   color: ColorConstants.textcolor,
                   fontSize: 16,
                   fontWeight: FontWeight.w400),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Color(0xff192252), width: 1)),
+                  borderSide:
+                      const BorderSide(color: Color(0xff192252), width: 1)),
               errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Color(0xff192252), width: 1)),
+                  borderSide:
+                      const BorderSide(color: Color(0xff192252), width: 1)),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Color(0xff192252), width: 1)),
+                  borderSide:
+                      const BorderSide(color: Color(0xff192252), width: 1)),
               disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Color(0xff192252), width: 1)),
+                  borderSide:
+                      const BorderSide(color: Color(0xff192252), width: 1)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Color(0xff192252), width: 1)),
+                  borderSide:
+                      const BorderSide(color: Color(0xff192252), width: 1)),
             ),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
@@ -452,28 +576,35 @@ class _EmailFormState extends State<EmailForm> {
               return null;
             },
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           GestureDetector(
             onTap: () {
               if (_formKey.currentState?.validate() ?? false) {
-                // Handle the email submission here
-                print('Email: ${_emailController.text}');
-                Navigator.of(context).pop(); // Close the dialog
+                final email = _emailController.text.trim();
+
+                // Call the API to send the forgot password request
+                sendForgotPasswordRequest(email);
+
+                // Clear the email input field
+                _emailController.clear();
               }
             },
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: ColorConstants.primaryColor,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
-                child: Text('Reset Password',
-                    style: GoogleFonts.plusJakartaSans(
-                        color: ColorConstants.whiteColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600)),
+                child: Text(
+                  'Reset Password',
+                  style: GoogleFonts.plusJakartaSans(
+                    color: ColorConstants.whiteColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ),

@@ -1,17 +1,17 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 import 'package:legala/constants/appbarconstant.dart';
 import 'package:legala/constants/coloconstant.dart';
 import 'package:legala/constants/datepick.dart';
 import 'package:legala/constants/drawer.dart';
 import 'package:legala/constants/filterconstant.dart';
-import 'package:legala/constants/imageconstant.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart'; // Import app bar constant
+// Import app bar constant
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -25,17 +25,12 @@ class _HomepageState extends State<Homepage> {
 
   DateTime? selectedDate;
 
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    setState(() {
-      selectedDate = args.value;
-    });
-  }
 
   void _showDatePickerDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Column(
+      return const Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [DatePickerDemo()],
@@ -50,18 +45,18 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.searchfield,
-      appBar: CustomAppBar(), // Call your reusable CustomAppBar here
-      drawer: CustomDrawer(),
+      appBar: const CustomAppBar(), // Call your reusable CustomAppBar here
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 35),
-              FilterConstant(),
-              SizedBox(height: 10),
+              const SizedBox(height: 35),
+              const FilterConstant(),
+              const SizedBox(height: 10),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -73,12 +68,12 @@ class _HomepageState extends State<Homepage> {
                       fontWeight: FontWeight.w700),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemCount: 12,
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -89,19 +84,19 @@ class _HomepageState extends State<Homepage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16)),
                       child: Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             color: ColorConstants.whiteColor,
                             borderRadius: BorderRadius.circular(16)),
                         child: Column(
                           children: [
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
                                       horizontal: 8.0),
                                   child: CircleAvatar(
                                     radius:
@@ -133,7 +128,7 @@ class _HomepageState extends State<Homepage> {
                                           Align(
                                             alignment: Alignment.centerRight,
                                             child: Text(
-                                              '₹' + '50,000' + '/-',
+                                              '₹50,000/-',
                                               textAlign: TextAlign.right,
                                               style: GoogleFonts.urbanist(
                                                   color: ColorConstants
@@ -144,7 +139,7 @@ class _HomepageState extends State<Homepage> {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         '2BHK',
                                         style: GoogleFonts.urbanist(
@@ -152,7 +147,7 @@ class _HomepageState extends State<Homepage> {
                                             fontWeight: FontWeight.w400,
                                             color: ColorConstants.lighttext),
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -168,15 +163,15 @@ class _HomepageState extends State<Homepage> {
                                           Align(
                                             alignment: Alignment.centerRight,
                                             child: Container(
-                                                padding: EdgeInsets.all(5),
+                                                padding: const EdgeInsets.all(5),
                                                 decoration: BoxDecoration(
-                                                    color: Color(0xffF2F4FF),
+                                                    color: const Color(0xffF2F4FF),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             5)),
                                                 child: Icon(
                                                   Icons.phone,
-                                                  color: Color(0xff526bf1),
+                                                  color: const Color(0xff526bf1),
                                                   size: 2.5.h,
                                                 )),
                                           ),
@@ -188,7 +183,7 @@ class _HomepageState extends State<Homepage> {
                               ],
                             ),
                             SizedBox(height: 1.h),
-                            Divider(
+                            const Divider(
                               color: ColorConstants.lighttext,
                               thickness: 0.5,
                             ),
@@ -216,17 +211,17 @@ class _HomepageState extends State<Homepage> {
                                         onChanged: (value) {
                                           setState(() {
                                             switchValues[index] = value;
-                                            print(value.toString());
+                                           
                                           });
                                         },
                                         thumbColor: ColorConstants.whiteColor,
-                                        activeColor: Color(
+                                        activeColor: const Color(
                                             0xff68CC58), // Thumb color when active
-                                        trackColor: Color(
+                                        trackColor: const Color(
                                             0xffF0F0F2), // Track color when inactive
                                       ),
                                     ),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Text(
                                       switchValues[index] == false
                                           ? 'Make as paid'

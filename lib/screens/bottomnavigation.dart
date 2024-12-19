@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui' as ui;
 
 import 'package:legala/constants/coloconstant.dart';
 import 'package:legala/constants/imageconstant.dart';
@@ -11,7 +10,10 @@ import 'package:legala/screens/units/unitslist.dart';
 
 
 class BottomNavigation extends StatefulWidget {
+  const BottomNavigation({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _BottomNavigationState createState() => _BottomNavigationState();
 }
 
@@ -20,11 +22,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   // List of pages to navigate to
   final List<Widget> _pages = [
-    Homepage(),
-    PropertyList(),
-    UnitsList(),
-    TenantList(),
-    Homepage(),
+    const Homepage(),
+    const PropertyList(),
+    const UnitsList(),
+    const TenantList(),
+    const Homepage(),
   ];
 
   void _onItemTapped(int index) {
@@ -51,7 +53,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               height: 82, // Adjust height if needed
               decoration: BoxDecoration(
                 color: Colors.transparent, // Transparent to see CustomPaint
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),  // Rounded top-left corner
                   topRight: Radius.circular(20), // Rounded top-right corner
                   // Bottom corners are not rounded, keeping them sharp
@@ -61,12 +63,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     color: Colors.black.withOpacity(0.25),
                     spreadRadius: 0,
                     blurRadius: 9,
-                    offset: Offset(0, -1),
+                    offset: const Offset(0, -1),
                   ),
                 ],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),  // Rounded top-left corner
                   topRight: Radius.circular(20), // Rounded top-right corner
                 ),
@@ -140,9 +142,9 @@ class RPSCustomPainter extends CustomPainter {
     path_0.lineTo(9, 30);
     path_0.close();
 
-    Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0, paint_0_fill);
+    Paint paint0Fill = Paint()..style = PaintingStyle.fill;
+    paint0Fill.color = Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0, paint0Fill);
   }
 
   @override

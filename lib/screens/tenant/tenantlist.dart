@@ -1,19 +1,17 @@
-import 'package:flutter/cupertino.dart';
+
+// ignore_for_file: unused_element, deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 import 'package:legala/constants/appbarconstant.dart';
 import 'package:legala/constants/coloconstant.dart';
 import 'package:legala/constants/datepick.dart';
 import 'package:legala/constants/drawer.dart';
 import 'package:legala/constants/filterconstant.dart';
-import 'package:legala/constants/imageconstant.dart';
-import 'package:legala/models/unitdropdown.dart';
+import 'package:legala/models/dummymodel.dart';
 import 'package:legala/screens/tenant/createtenant.dart';
-import 'package:legala/screens/tenant/viewtenantprofile.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart'; // Import app bar constant
 
 class TenantList extends StatefulWidget {
@@ -38,7 +36,7 @@ class _TenantListState extends State<TenantList> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Column(
+        return const Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [DatePickerDemo()],
@@ -51,18 +49,18 @@ class _TenantListState extends State<TenantList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.searchfield,
-      appBar: CustomAppBar(), // Call your reusable CustomAppBar here
-      drawer: CustomDrawer(),
+      appBar: const CustomAppBar(), // Call your reusable CustomAppBar here
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 35),
-              FilterConstant(),
-              SizedBox(height: 10),
+              const SizedBox(height: 35),
+              const FilterConstant(),
+              const SizedBox(height: 10),
               SizedBox(
                 height: 3.h,
               ),
@@ -80,26 +78,24 @@ class _TenantListState extends State<TenantList> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CreateTenant()),
+                        MaterialPageRoute(builder: (context) => const CreateTenant()),
                       );
                     },
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: ColorConstants.primaryColor,
-                            size: 20,
-                          ),
-                          Text(
-                            'Add Tenant',
-                            style: GoogleFonts.urbanist(
-                                color: ColorConstants.primaryColor,
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.add,
+                          color: ColorConstants.primaryColor,
+                          size: 20,
+                        ),
+                        Text(
+                          'Add Tenant',
+                          style: GoogleFonts.urbanist(
+                              color: ColorConstants.primaryColor,
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
                     ),
                   )
                 ],
@@ -107,7 +103,9 @@ class _TenantListState extends State<TenantList> {
               SizedBox(
                 height: 2.h,
               ),
-             TenantListPage()
+
+              const TenazListScreen(),
+           
             ],
           ),
         ),

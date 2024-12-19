@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class ImageConstants {
   ///this was in oimages folder
   static const String LOGO = 'assets/images/logo.png';
@@ -27,11 +29,19 @@ class ImageConstants {
   static const String PROPERTYIMG = 'assets/images/property.png';
 
   // icons
-   static const String EDIT = 'assets/icons/edit.png';
-   static const String DELETE = 'assets/icons/delete.png';
+
+  static const String EDIT = 'assets/icons/edit.png';
+
+  static const String DELETE = 'assets/icons/delete.png';
+
+  static const String RIGHTARROW = 'assets/icons/rightarrow.png';
+  static const String LEFTARROW = 'assets/icons/leftarrow.png';
 
   //  unitsicon
+
   static const String BEDROOM = 'assets/icons/bedroom.png';
+
   static const String KITCHEN = 'assets/icons/kitchen.png';
+
   static const String BATHROOOMS = 'assets/icons/bathroom.png';
 }

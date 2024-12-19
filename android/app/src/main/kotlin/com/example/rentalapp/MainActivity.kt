@@ -1,4 +1,4 @@
-package com.example.legala
+package com.rentalapp.legala
 
 import io.flutter.embedding.android.FlutterActivity
 
